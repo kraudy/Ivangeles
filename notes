@@ -1,4 +1,21 @@
 uwsgi is an app that runs on the web server -nginx- and it serves the python app -django app-
 but i think it can serve others things too, other than only what the apps needs..?
+uwsgi    -> wsgi for nginx
+mod_wsgi -> wsgi for apache
+wsgi = web server gateway inteface / specifications for python apps... thas's cool
 
 the client is a process, just like the the services
+
+the client and the server comunicates over the request-response model.
+For what i understand, HTTP carries this request-response thing
+
+Hosts are like the app that the clients want to deal with and tha the server serves, right?
+One host computer can have multiple host names, but we preffer to use one
+
+Url indicate: the protocol/hostname/especifications -based on what the client needs or wants from the app-
+
+nginx installation folder: /usr/local/Cellar/nginx/1.21.1
+configurations: /usr/local/etc/nginx/nginx.conf -port and stuff-
+nginx will load all files in: /usr/localetc/nginx/servers/
+
+the services that start with the operting system are at /Libary/LaunchAgents
