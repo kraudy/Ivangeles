@@ -1,0 +1,4 @@
+uwsgi is an app that runs on the web server -nginx- and it serves the python app -django app-
+but i think it can serve others things too, other than only what the apps needs..?
+
+the client is a process, just like the the services

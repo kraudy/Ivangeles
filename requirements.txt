@@ -1,0 +1,5 @@
+Mac OSX
+Python
+Django
+uWSGI
+nginx
