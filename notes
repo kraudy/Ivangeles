@@ -33,13 +33,37 @@ It looks like these processes are just normal system processes that are used by 
 nginx.pid -> /usr/loca/var/run/nginx/nginx.pid
 
 nginx is controlled by directives, which are in the nginx.conf
-Ex:
+Ex, a context:
   http{
     sendfile  on;
     keepalive_timeout 65;
   }
 This is how you control the master process, these are like instructions to the master process
 block directive ->  http {}
+A block directive with other directives inside is called a context -that nice-
+
+the 4 basic contexts: events, https, server, location 
+directives outsides of any context are said to be in the main context -the .conf file-
+nginx can have multiple virutual servers
+server {
+  listen 80;
+  # listen 192.168.0.1:8080;
+  server_name example.org www.example.org;
+}
+server {
+  listen 80;
+  server_name example.net www.example.net;
+}
+
+* FastCGI: manages the processe for the requests
+it's like a server inside the server. It has its own processes -idk man-
+It's more like a service
+This thing gives its response to the server, and the server back to the client
+Nginx can have multiple FastCGI servers
+enables the implementation of per-application
+Different kins of request can be redirected trough specific FastCGI servers -that's amazing-
+
+sockets: They permit data exchanging between processes on the same os
 
 ==============
 
