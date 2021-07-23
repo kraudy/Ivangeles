@@ -69,7 +69,36 @@ Sofwares with differents processes means that they have different address space.
 the other one is fine -that's cool-
   The server, the FastCGI server, and the application. They all are isolated
 
-FasctCGI can run on a remote machine from the server -using TCP between the server and the fastcgi-
+FastCGI can run on a remote machine from the server -using TCP between the server and the fastcgi-
+  This can be used a connector between the external web server, the internal database and the application
+  External server -> FastCGI -> Database and web app
+# Load distribution:
+  When the web server machine starts to become a bottleneck, you can add other FastCGI apps on diiferent 
+  machines "behind the scene" -that's amazing- to handle the heavy traffic 
+  You can have several application machines and each one having its specific -configuarion- FastCGI machine and 
+  all of them talking to the external web server!
+  You can also tailor each machine to the application they are hosting
+FastCGI packet format
+  1byte 1byte 2byte 2byte xbyte
+    |     |     |     |     |------ Data bytes
+    |     |     |     ------------- Data Length
+    |     |     ------------------- Request ID
+    |     ------------------------- Rercord type
+    ------------------------------- Protocol version
+They can mutliplex because they add an ID -tying the packet to a specific request- to every package, so you can process
+the data of multiple request without interference
+
+Packet types -maybe these are the Record types? idk-
+  FCGI_PARAMS:      names/values from server to app
+  FCGI_STDIN:       sending standard input from the server to app
+  FCGI_DATA:        sending filter data (?) to the app
+  FCGI_STDOUT:      standard output from the app to the server
+  FCGI_STDERR:      standard error from the app the the server
+  FCGI_END_REQUEST: ends the request (can be send by the server or the app)
+
+=============
+LTS runs on top of TCP
+and what about IP ????
 
 ==============
 ./Configure  -> it makes the configuration for your specific system, otherwise... how would it install it?
