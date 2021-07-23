@@ -56,17 +56,45 @@ server {
   server_name example.net www.example.net;
 }
 
-Simple configuration
+Simple configuration example
 http{
   server{
-    location{
+    location / {
+      root /data/www;
+      # https:/localhost/some/example.html -> request ngnix will sent /data/www/some/example.html to fcgi
     }
-    location{
+    location /images/{
+      root /data;
+    }
+  }
+  #proxy server
+  server{
+    listen 8080;
+    root /data/upl;
+    location / {
+      proxy_pass https://localhost:8080;
+    }
+    location ~ \.(gif|jpg|png)${
+      root /data/images;
+    }
+  }
+  #proxy FastCGI server
+  server{
+    location / {
+      fastcgi_pass localhost:9000;
+      fastcgi_param asdfasdf
+      fastcgi_param asdfasdf
     }
   }
 }
 
 
+there can be several server blocks distinguished by the ports on which they listen to
+Once nginx decides which server processes the requiest, it test the url specified in the request agains
+the parameters of the location directives, inside the server block
+
+The location block tells the server where it has to search for this request and nginx sends it to the FastCGI app
+The server selects the longest prefix that matches, that's how it filters them
 
 ---- FastCGI -----
 
