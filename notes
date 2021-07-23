@@ -14,8 +14,33 @@ One host computer can have multiple host names, but we preffer to use one
 
 Url indicate: the protocol/hostname/especifications -based on what the client needs or wants from the app-
 
+==== NginX ====
 nginx installation folder: /usr/local/Cellar/nginx/1.21.1
 configurations: /usr/local/etc/nginx/nginx.conf -port and stuff-
 nginx will load all files in: /usr/localetc/nginx/servers/
+
+it has one master process and several worker processes 
+configuarion is in /usr/local/etc/nginx/nginx.conf
+worker processes do the actual work. The master one only manages things
+
+Employs event-based model to distribute requests among worker processes
+nginx -s {signal} -> sends signals to the master process
+signals = {stop, quit, reload, reopen}
+The master process starts the work process
+
+It looks like these processes are just normal system processes that are used by nginx
+
+nginx.pid -> /usr/loca/var/run/nginx/nginx.pid
+
+nginx is controlled by directives, which are in the nginx.conf
+Ex:
+  http{
+    sendfile  on;
+    keepalive_timeout 65;
+  }
+This is how you control the master process, these are like instructions to the master process
+block directive ->  http {}
+
+==============
 
 the services that start with the operting system are at /Libary/LaunchAgents
