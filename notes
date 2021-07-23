@@ -66,5 +66,23 @@ Different kins of request can be redirected trough specific FastCGI servers -tha
 sockets: They permit data exchanging between processes on the same os
 
 ==============
+./Configure  -> it makes the configuration for your specific system, otherwise... how would it install it?
+it also looks for the compiler -c compiler, for example-
+configure is a script
+  so, when you hit /.configure, you are runnig the script
+./configure takes the template called "Makefile.in" and produces the customised Makefile that is used by make
+Makefile is used to build the software\
+build -> compile source code for executable software
+binaries -> compiled code
+make         -> this one build the software
+the Makefile also defines the instalation and stuff -yeah, it does a lot of stuff-
+make install -> and this copies all the files to their correct destination
+  a file in PATH
+
+* Autotools
+  gnu autotools includes autoconf and automake
+
+macros -> map input to output
+==============
 
 the services that start with the operting system are at /Libary/LaunchAgents
