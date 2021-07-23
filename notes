@@ -14,7 +14,8 @@ One host computer can have multiple host names, but we preffer to use one
 
 Url indicate: the protocol/hostname/especifications -based on what the client needs or wants from the app-
 
-==== NginX ====
+====== NginX ======
+
 nginx installation folder: /usr/local/Cellar/nginx/1.21.1
 configurations: /usr/local/etc/nginx/nginx.conf -port and stuff-
 nginx will load all files in: /usr/localetc/nginx/servers/
@@ -54,6 +55,20 @@ server {
   listen 80;
   server_name example.net www.example.net;
 }
+
+Simple configuration
+http{
+  server{
+    location{
+    }
+    location{
+    }
+  }
+}
+
+
+
+---- FastCGI -----
 
 * FastCGI: manages the processe for the requests
 it's like a server inside the server. It has its own processes -idk man-
@@ -95,6 +110,46 @@ Packet types -maybe these are the Record types? idk-
   FCGI_STDOUT:      standard output from the app to the server
   FCGI_STDERR:      standard error from the app the the server
   FCGI_END_REQUEST: ends the request (can be send by the server or the app)
+
+Application roles
+  Responder:  the basic cgi role
+  Filter:     the FastCGI app filters the requested web server file before sending it to the app
+    Makes on the fly format conversions
+    Dynamic documents
+    Applying a template
+  Authorizer: the FastCGI app performs an access contro decision (like username/password database lookup)
+    Makes an access control decision for a request
+    The server can access multiple FastCGI authorizers, befor access is allowed
+
+    Dynamics redirects, based on the request profile
+    complex access policie, such as time-of-day access
+    smart-card challenge/response authentication
+    access control based on user/pass, where the data is in an external database
+
+The web server "constructs" the request and sends it to the FastCGI app and this produces the response to that request,
+and is send back to the server, which sends it back to the client
+
+Simple FastCGI application:
+  #include <fcgi_stdio.h>
+  void main(void){
+    int count = 0;
+    while(FCGI_Accept() >= 0){
+      printf("Content-type: text/html\r\n");
+      printf("\r\n");
+      printf("Hello world!<br>\r\n");
+      printf("Request number %d.", count++);
+    }
+    exit(0);
+  }
+The library "fcgi_stdio" convers the standard C standar I/O library to the FastCGI protocol
+
+FastCGI Apps are configured withing the server .conf fiel
+
+Session Affinity: all the request of the same user session area managed by the same FastCGI app
+  This is useful when you have expensive operations
+What constitutes a "session" is configurable:
+  it could be the url path, client's hostname, username, etc
+
 
 =============
 LTS runs on top of TCP
