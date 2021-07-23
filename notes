@@ -65,6 +65,12 @@ Different kins of request can be redirected trough specific FastCGI servers -tha
 
 sockets: They permit data exchanging between processes on the same os
 
+Sofwares with differents processes means that they have different address space. Which means... if one gets weird,
+the other one is fine -that's cool-
+  The server, the FastCGI server, and the application. They all are isolated
+
+FasctCGI can run on a remote machine from the server -using TCP between the server and the fastcgi-
+
 ==============
 ./Configure  -> it makes the configuration for your specific system, otherwise... how would it install it?
 it also looks for the compiler -c compiler, for example-
